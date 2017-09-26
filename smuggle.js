@@ -9,6 +9,7 @@ var smuggle = {
     if (!sming) {
       throw "Input string must conform to 'smuggle' syntax (see documentation).";
     }
+    var smob = {}; // the object that will be returned at the end
     sming.forEach(function (item) {
     
       item = item.replace(/([^`]?)(,,|;;)$/,'$1').replace(/`(,,|;;)/g,'$1');
@@ -16,9 +17,9 @@ var smuggle = {
       if (!item) {
         throw "Input string must conform to 'smuggle' syntax (see documentation).";
       }
-      (this.smob = this.smob || {})[item[1].replace(/`::/g, '::')] = item[2].replace(/`::/g, '::');
+      smob[item[1].replace(/`::/g, '::')] = item[2].replace(/`::/g, '::');
     });
-    return this.smob;
+    return smob;
   },
   
   stringify: function (smob, del = ',,') { // smob is the object to be stringified
@@ -29,10 +30,11 @@ var smuggle = {
     if (!/,,|;;/.test(del)) {
       throw "The delimeter must be one of: ',,' or ';;'."; 
     }
+    var sming = ''; // the string that will be returned at the end
     for (var k in smob) {
-      this.sming ? this.sming += del : this.sming = '';
-      this.sming += k.replace(/(,,|;;|::)/g, '`$1') + '::' + smob[k].replace(/(,,|;;|::)/g, '`$1');
+      !sming || (sming += del);
+      sming += k.replace(/(,,|;;|::)/g, '`$1') + '::' + smob[k].replace(/(,,|;;|::)/g, '`$1');
     }
-    return this.sming;
+    return sming;
   }
 }
