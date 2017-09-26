@@ -16,7 +16,7 @@ var smuggle = {
       if (!item) {
         throw "Input string must conform to 'smuggle' syntax (see documentation).";
       }
-      (this.smob || this.smob = {})[item[1].replace(/`::/g, '::')] = item[2].replace(/`::/g, '::');
+      (this.smob = this.smob || {})[item[1].replace(/`::/g, '::')] = item[2].replace(/`::/g, '::');
     });
     return this.smob;
   },
