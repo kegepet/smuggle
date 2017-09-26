@@ -1,32 +1,38 @@
-var Smuggle = {
+var smuggle = {
 
-  parse: function (data) {
+  parse: function (sming) { // sming is the input string
     
-    if (!/string/i.test(typeof data)) {
-      console.error("'parse' method requires argument of type 'string'");
-      return;
+    if (!/string/i.test(typeof sming)) {
+      throw "Argument must be of type 'string'.";
     }
-    data = data.match(/.+?([^`](,,|;;)|$)/g);
-    if (!data) {
-      console.error("Input string must conform to 'smuggle' syntax. (See documentation at project's github page.)");
-      return;
+    sming = sming.match(/.+?([^`](,,|;;)|$)/g);
+    if (!sming) {
+      throw "Input string must conform to 'smuggle' syntax (see documentation).";
     }
-    var smob = {}; // the object that will be returned at the end
-    data.forEach(function (item) {
+    sming.forEach(function (item) {
     
       item = item.replace(/([^`]?)(,,|;;)$/,'$1').replace(/`(,,|;;)/g,'$1');
       item = item.match(/(.*[^`])::(.*)/);
       if (!item) {
-        console.error("Input string must conform to 'smuggle' syntax. (See documentation at project's github page.)");
-        return;
+        throw "Input string must conform to 'smuggle' syntax (see documentation).";
       }
-      smob[item[1].replace(/`::/g, '::')] = item[2].replace(/`::/g, '::');
+      (this.smob || this.smob = {})[item[1].replace(/`::/g, '::')] = item[2].replace(/`::/g, '::');
     });
-    return smob;
+    return this.smob;
   },
   
-  stringify: function () {
+  stringify: function (smob, del = ',,') { // smob is the object to be stringified
   
-  
+    if (!/object/i.test(typeof smob)) {
+      throw "Argument must be of type 'object'."; 
+    }
+    if (!/,,|;;/.test(del)) {
+      throw "The delimeter must be one of: ',,' or ';;'."; 
+    }
+    for (var k in smob) {
+      this.sming ? this.sming += del : this.sming = '';
+      this.sming += k.replace(/(,,|;;|::)/g, '`$1') + '::' + smob[k].replace(/(,,|;;|::)/g, '`$1');
+    }
+    return this.sming;
   }
 }
