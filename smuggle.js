@@ -1,6 +1,6 @@
 var smuggle = {
 
-  parse: function (sming, castType = ['number', 'boolean']) { // sming is the input string; numify for type conversion
+  parse: function (sming, castType = ['number', 'boolean']) { // sming is the input string; castType lists types to cast
 
     /string/i.test(typeof sming) || throw 'Argument must be of type "string".';
     (castType.constructor === Array) || throw 'Second argument must be an Array with possible values: "number" or "boolean".';
@@ -14,7 +14,7 @@ var smuggle = {
       // separate key and value
       item = item.match(/(.*(?:^|[^`])(?:``)*)::(.*)/);
       item || throw 'Input string must conform to "smuggle" syntax (see documentation).';
-      // populate object; strip escape characters; numerical type conversion
+      // populate object; strip escape characters; type conversion
       var k = item[1].replace(/`(.|$)/g, '$1');
       var v = item[2].replace(/`(.|$)/g, '$1');
       /^[0-9.]+$/.test(v) && /number/i.test(castType) && (v = +v);
