@@ -9,16 +9,16 @@ var smuggle = {
       throw 'Second argument must be an Array with one or both possible values: "number" or "boolean".';
     }
     castType = castType.join(' ');
-    sming = sming.match(/.*?(^|[^`])(``)*(,,|;;|$)/g);
+    sming = sming.match(/(^|.*?[^`](``)*)(,,|;;|$)/g);
     if (!sming) {
       throw 'Input string must conform to "smuggle" syntax (see documentation).';
     }
     var smob = {}; // the object that will be returned at the end
-    sming.forEach(function (item) {
+    for (var i = 0, item; item = sming[i]; i++) {
       // strip trailing delimeters
-      item = item.replace(/(.*(^|[^`])(``)*)(,,|;;)$/,'$1');
+      item = item.replace(/(^|.*?[^`](``)*)(,,|;;)$/,'$1');
       // separate key and value
-      item = item.match(/(.*?(?:^|[^`])(?:``)*)::(.*)/);
+      item = item.match(/(^|.*?[^`](?:``)*)::(.*)/);
       if (!item) {
         throw 'Input string must conform to "smuggle" syntax (see documentation).';
       }
@@ -28,7 +28,7 @@ var smuggle = {
       /^[0-9.]+$/.test(v) && /number/i.test(castType) && (v = +v);
       /^(true|false)$/.test(v) && /boolean/i.test(castType) && (v = /true/i.test(v));
       smob[k] = v;
-    });
+    }
     return smob;
   },
 
