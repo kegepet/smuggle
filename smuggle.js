@@ -18,7 +18,7 @@ var smuggle = {
       // strip trailing delimeters
       item = item.replace(/(.*(^|[^`])(``)*)(,,|;;)$/,'$1');
       // separate key and value
-      item = item.match(/(.*(?:^|[^`])(?:``)*)::(.*)/);
+      item = item.match(/(.*?(?:^|[^`])(?:``)*)::(.*)/);
       if (!item) {
         throw 'Input string must conform to "smuggle" syntax (see documentation).';
       }
