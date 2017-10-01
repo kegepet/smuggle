@@ -46,7 +46,7 @@ var smuggle = {
         throw 'Object can contain "string", "number", or "boolean" types only.';
       }
       sming && (sming += del);
-      sming += k.replace(/(,,|;;|::|`)/g, '`$1') + '::' + smob[k].replace(/(,,|;;|::|`)/g, '`$1');
+      sming += k.replace(/(,,|;;|::|`)/g, '`$1') + '::' + String(smob[k]).replace(/(,,|;;|::|`)/g, '`$1');
     }
     return sming;
   }
