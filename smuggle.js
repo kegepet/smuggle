@@ -2,7 +2,7 @@ var smuggle = {
 
   parse: function (sming, castType = ['number', 'boolean']) { // sming is the input string; castType lists types to cast
 
-    if (!/string/i.test(typeof sming)) {
+    if (sming.constructor !== String) {
       throw 'Argument must be of type "string".';
     }
     if (castType.constructor !== Array) {
@@ -34,7 +34,7 @@ var smuggle = {
 
   stringify: function (smob, del = ',,') { // smob is the object to be stringified
 
-    if (!/object/i.test(typeof smob)) {
+    if (smob.constructor !== Object) {
       throw 'Argument must be of type "object".';
     }
     if (!/^(,,|;;)$/.test(del)) {
